@@ -4,25 +4,40 @@
              x:Class="MauiAppMinhasCompras.Views.EditarProduto"
              Title="{Binding Descricao}">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Salvar"
-                Clicked="ToolbarItem_Clicked"/>
-    </ContentPage.ToolbarItems>
+       <ContentPage.ToolbarItems>
+              <ToolbarItem Text="Salvar"
+                           Clicked="ToolbarItem_Clicked_editar"/>
+       </ContentPage.ToolbarItems>
 
-    <VerticalStackLayout Spacing="10"
-            Padding="10">
-        <Label Text="Descrição do Produto:"/>
-        <Entry x:Name="txt_descricao"
-                Text="{Binding Descricao}"/>
+       <VerticalStackLayout Spacing="10"
+                            Padding="10">
+              <Label Text="Descrição do Produto:"/>
+              <Entry x:Name="txt_descricao"
+                     Text="{Binding Descricao}"/>
 
-        <Label Text="Quantidade:"/>
-        <Entry x:Name="txt_quantidade"
-                Text="{Binding Quantidade}"
-                Keyboard="Numeric"/>
+              <Label Text="Quantidade:"/>
+              <Entry x:Name="txt_quantidade"
+                     Text="{Binding Quantidade}"
+                     Keyboard="Numeric"/>
 
-        <Label Text="Preço Unitário:"/>
-        <Entry x:Name="txt_preco"
-                Text="{Binding Preco}"
-                Keyboard="Numeric"/>
-    </VerticalStackLayout>
+              <Label Text="Preço Unitário:"/>
+              <Entry x:Name="txt_preco"
+                     Text="{Binding Preco}"
+                     Keyboard="Numeric"/>
+
+              <Label Text="Categoria: "/>
+              <Picker x:Name="picker_categoria"
+                      Title="Escolha uma Categoria"
+                      SelectedItem="{Binding Categoria}"
+                      VerticalOptions="Center"
+                      HorizontalOptions="Center">
+                     <Picker.Items>
+                            <x:String>Todos</x:String>
+                            <x:String>Alimentação</x:String>
+                            <x:String>Higiene</x:String>
+                            <x:String>Eletronicos</x:String>
+                     </Picker.Items>
+              </Picker>
+
+       </VerticalStackLayout>
 </ContentPage>

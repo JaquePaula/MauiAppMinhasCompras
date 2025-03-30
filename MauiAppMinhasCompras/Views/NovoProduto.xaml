@@ -6,7 +6,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Salvar"
-                     Clicked="ToolbarItem_Clicked"/>
+                     Clicked="ToolbarItem_Clicked_add"/>
     </ContentPage.ToolbarItems>
 
     <VerticalStackLayout Spacing="10"
@@ -29,6 +29,18 @@
         <Entry x:Name="txt_preco"
                Keyboard="Numeric"/>
 
+        <Label Text="Categoria: "/>
+        <Picker x:Name="picker_categoria"
+                Title="Escolha uma Categoria"
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
+            <Picker.Items>
+                <x:String>Todos</x:String>
+                <x:String>Alimentação</x:String>
+                <x:String>Higiene</x:String>
+                <x:String>Eletronicos</x:String>
+            </Picker.Items>
+        </Picker>
 
     </VerticalStackLayout>
 </ContentPage>

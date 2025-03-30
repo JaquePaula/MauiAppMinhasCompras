@@ -30,7 +30,7 @@ public partial class ListaProduto : ContentPage
 		}
 	}
 
-	private void ToolbarItem_Clicked(object sender, EventArgs e)
+	private void ToolbarItem_Clicked_add(object sender, EventArgs e)
 	{
 		try
 		{
@@ -61,11 +61,11 @@ public partial class ListaProduto : ContentPage
 		}
 	}
 
-	private void ToolbarItem_Clicked_1(object sender, EventArgs e)
+	private void ToolbarItem_Clicked_soma(object sender, EventArgs e)
 	{
 		double soma = lista.Sum(i => i.Total);
 
-		string msg = $"O total � {soma:C}";
+		string msg = $"O total é {soma:C}";
 
 		DisplayAlert("Total dos Produtos", msg, "OK");
 	}
@@ -79,7 +79,7 @@ public partial class ListaProduto : ContentPage
 			Produto p = selecinado.BindingContext as Produto;
 
 			bool confirm = await DisplayAlert(
-					"Tem Certeza?", $"Remover {p.Descricao}?", "Sim", "N�o");
+					"Tem Certeza?", $"Remover {p.Descricao}?", "Sim", "Não");
 
 			if (confirm)
 			{
@@ -110,4 +110,58 @@ public partial class ListaProduto : ContentPage
 		}
 	}
 
+	private async void picker_categoria_SelectedIndexChanged(object sender, EventArgs e)
+	{
+		try
+		{
+
+			string categoriaSelecionada = picker_categoria.SelectedItem.ToString();
+
+
+			List<Produto> tmp = await App.Db.GetAll();
+
+
+			if (categoriaSelecionada != "Todos")
+			{
+				tmp = tmp.Where(p => p.Categoria == categoriaSelecionada).ToList();
+			}
+
+
+			lista.Clear();
+			tmp.ForEach(i => lista.Add(i));
+
+			lst_produtos.ItemsSource = lista;
+		}
+		catch (Exception ex)
+		{
+			await DisplayAlert("Ops", ex.Message, "OK");
+		}
+	}
+
+	private void ToolbarItem_Clicked_relatorio(object sender, EventArgs e)
+	{
+		var relatorio = lista
+				.GroupBy(i => i.Categoria)
+				.Select(g => new { Categoria = g.Key, Total = g.Sum(i => i.Quantidade * i.Preco) })
+				.ToList();
+
+		if (relatorio.Count == 0)
+		{
+			DisplayAlert("Relatório", "Nenhum dado disponível.", "OK");
+			return;
+		}
+
+		string msg = "Relatório de Vendas por Categoria:\n\n";
+		foreach (var item in relatorio)
+		{
+			msg += $"{item.Categoria}: {item.Total:C}\n";
+		}
+
+		DisplayAlert("Relatório", msg, "OK");
+	}
+
+
 }
+
+
+
